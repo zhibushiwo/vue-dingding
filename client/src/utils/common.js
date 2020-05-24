@@ -29,3 +29,7 @@ export function throttle(action, delay) {
         lastTimeAction()
     }
 }
+
+export function isDef(v) {
+    return v !== undefined && v !== null
+}

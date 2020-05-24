@@ -10,10 +10,20 @@
 import DingHead from "./components/ding-head";
 import DingSideBar from "./components/ding-sidebar";
 import DingContent from "./components/ding-content";
+import { mapGetters } from "vuex";
 export default {
   name: "Layout",
   data() {
     return {};
+  },
+  mounted() {
+    console.log(this.isLogin);
+    if (!this.isLogin) {
+      this.$router.push("/login");
+    }
+  },
+  computed: {
+    ...mapGetters(["isLogin"])
   },
   components: {
     DingHead,
