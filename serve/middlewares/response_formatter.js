@@ -7,10 +7,10 @@ const response_formatter = () => async (ctx, next) => {
             data: ctx.body
         }
     } else {
-        ctx.body = {
-            code: 200,
-            message: 'success'
-        }
+        // ctx.body = {
+        //     code: 200,
+        //     message: 'success'
+        // }
     }
 }
 module.exports = response_formatter

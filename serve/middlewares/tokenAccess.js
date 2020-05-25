@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
 const keys = require("../config/key")
 const tokenAccess = (ctx, next) => {
+    console.log(ctx)
     if (ctx.header && ctx.header.authorization) {
         const parts = ctx.header.authorization.split(' ');
         if (parts.length === 2) {
@@ -11,9 +12,10 @@ const tokenAccess = (ctx, next) => {
             if (/^Bearer$/i.test(scheme)) {
                 try {
                     //jwt.verify方法验证token是否有效
-                    jwt.verify(token, keys.secretKey, {
+                    const data = jwt.verify(token, keys.secretKey, {
                         complete: true
                     });
+                    console.log(data)
                 } catch (error) {
                     //token过期 生成新的token
                     const newToken = getToken(user);

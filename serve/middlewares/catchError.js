@@ -1,10 +1,10 @@
 const assert = require("assert")
 function catchError() {
     return async (ctx, next) => {
-        console.log(ctx, next)
         try {
             await next()
         } catch (err) {
+            console.log(err)
             if (err instanceof assert.AssertionError) {
                 ctx.body = {
                     code: 500,
@@ -12,8 +12,8 @@ function catchError() {
                 }
                 return
             }
+            ctx.throw(err)
             ctx.res = `Server Error: ${err.message}`;
-            console.error('Unhandled Error\n', err);
         }
     }
 }
