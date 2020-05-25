@@ -11,16 +11,22 @@ import DingHead from "./components/ding-head";
 import DingSideBar from "./components/ding-sidebar";
 import DingContent from "./components/ding-content";
 import { mapGetters } from "vuex";
+import { mapActions } from "vuex";
 export default {
   name: "Layout",
   data() {
     return {};
   },
-  mounted() {
-    console.log(this.isLogin);
+  async mounted() {
     if (!this.isLogin) {
-      this.$router.push("/login");
+      await this.authorization();
+      // if (!this.isLogin) {
+      //   this.$router.push("/login");
+      // }
     }
+  },
+  methods: {
+    ...mapActions(["authorization"])
   },
   computed: {
     ...mapGetters(["isLogin"])

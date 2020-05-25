@@ -1,36 +1,34 @@
 <template>
-  <div>
-    <div class="login">
-      <div class="loginBox">
-        <div class="boxHead">
-          <Icon v-if="isRegister" type="left" @click="isRegister=false" />钉钉
-        </div>
-        <div class="loginBody">
-          <div class="loginForm" v-if="!isRegister">
-            <el-tabs v-model="loginType">
-              <el-tab-pane label="密码登录" name="psw">
-                <div class="avatar">
-                  <img :src="avatar" />
-                  <el-input v-model="userName" placeholder="请输入用户名"></el-input>
-                  <el-input
-                    v-model="password"
-                    placeholder="请输入密码"
-                    type="password"
-                    @keydown.enter.native="handleSubmit"
-                  ></el-input>
-                </div>
-              </el-tab-pane>
-              <el-tab-pane label="扫描登陆" name="bar"></el-tab-pane>
-            </el-tabs>
-          </div>
-          <Register v-else @toLogin="toLogin" />
-          <div class="loginTool">
-            <div>自动登陆</div>
-            <div class="register" @click="toRegister">新用户注册</div>
-          </div>
-        </div>
-        <div class="loginFoot" v-show="!isRegister">钉钉登录</div>
+  <div class="login">
+    <div class="loginBox">
+      <div class="boxHead">
+        <Icon v-if="isRegister" type="left" @click="isRegister=false" />钉钉
       </div>
+      <div class="loginBody">
+        <div class="loginForm" v-if="!isRegister">
+          <el-tabs v-model="loginType">
+            <el-tab-pane label="密码登录" name="psw">
+              <div class="avatar">
+                <img :src="avatar" />
+                <el-input v-model="userName" placeholder="请输入用户名"></el-input>
+                <el-input
+                  v-model="password"
+                  placeholder="请输入密码"
+                  type="password"
+                  @keydown.enter.native="handleSubmit"
+                ></el-input>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="扫描登陆" name="bar"></el-tab-pane>
+          </el-tabs>
+        </div>
+        <Register v-else @toLogin="toLogin" />
+        <div class="loginTool">
+          <div>自动登陆</div>
+          <div class="register" @click="toRegister">新用户注册</div>
+        </div>
+      </div>
+      <div class="loginFoot" v-show="!isRegister">钉钉登录</div>
     </div>
   </div>
 </template>

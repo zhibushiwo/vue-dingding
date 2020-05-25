@@ -57,14 +57,15 @@ export const menuRoutes = [
       icon: "addresslist_fil"
     }
   }
-
 ]
-
 export default new VueRouter({
   routes: [
     {
       path: '/',
-      redirect: '/chat'
+      component: () => import('../layout/'),
+      children: [
+        ...menuRoutes
+      ]
     },
     {
       path: '/login',
