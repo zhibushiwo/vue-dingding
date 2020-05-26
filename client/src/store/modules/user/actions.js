@@ -29,10 +29,7 @@ export default {
                 console.log(res)
                 const { user } = res.data
                 // localStorage.setItem("token", token)
-                Message({
-                    message: "登录成功",
-                    type: "success"
-                })
+               
                 commit("setUser", user)
                 return true
             } else {
