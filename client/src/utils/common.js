@@ -12,7 +12,7 @@ export function debounce(fn, delay) {
         } else {
             timer = setTimeout(() => {
                 fn.apply(context, args)
-            }, timeout);
+            }, delay);
         }
     }
 }

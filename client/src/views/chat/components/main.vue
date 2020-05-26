@@ -1,21 +1,26 @@
 <template>
-  <div class="chatMain">
-    <div class="msgContent">
-      <Msg
-        v-for="(item,index) in msgData"
-        :key="index"
-        :content="item.content"
-        :time="item.time"
-        :isSend="item.isSend"
-        class="msg-item"
-      />
+  <div>
+    <div class="chatMain" v-if="chat">
+      <div class="msgContent">
+        <Msg
+          v-for="(item,index) in msgData"
+          :key="index"
+          :content="item.content"
+          :time="item.time"
+          :isSend="item.isSend"
+          class="msg-item"
+        />
+      </div>
+      <div class="editor"></div>
     </div>
-    <div class="editor"></div>
+    <Empty v-else />
   </div>
 </template>
 
 <script>
 import Msg from "@/components/msg-item.vue";
+import { mapGetters } from "vuex";
+import Empty from "./empty";
 export default {
   data() {
     return {
@@ -69,8 +74,12 @@ export default {
       ]
     };
   },
+  computed: {
+    ...mapGetters(["chat"])
+  },
   components: {
-    Msg
+    Msg,
+    Empty
   }
 };
 </script>

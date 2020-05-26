@@ -7,3 +7,6 @@ export const Register = params => request.post('/user/register', qs.stringify(pa
 
 export const GetUserInfo = () => request.get('/user/getList')
 
+export const GetSearchUser = params =>
+    request.get(`/user/getuser`, { params })
+

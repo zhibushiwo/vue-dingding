@@ -1,6 +1,6 @@
 <template>
   <div class="history">
-    <ChatItem v-for=" n in 12 " :key="n" class="chat-item" />
+    <ChatItem v-for=" n in 15 " :key="n" class="chat-item" />
   </div>
 </template>
 

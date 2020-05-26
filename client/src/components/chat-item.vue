@@ -21,7 +21,7 @@ export default {
     },
     contacts: {
       type: String,
-      default: "河马"
+      default: "hippo"
     },
     contactContent: {
       type: String,

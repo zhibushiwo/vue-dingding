@@ -25,7 +25,6 @@ export default {
       if (this.color) {
         cls += ` icon-color-${this.color} `;
       }
-      console.log(cls)
       return cls;
     },
     getIconStyle() {

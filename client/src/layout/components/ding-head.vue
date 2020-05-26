@@ -1,12 +1,14 @@
 <template>
   <div class="head">
-    <div class="left"></div>
+    <div class="left">
+      <SearchBar />
+    </div>
     <div class="right">
       <ChatHead
         :avatar="user.avatar"
         :userName="user.userName"
         :userDetail="user.userDetail"
-        v-if="$route.name==='chat'"
+        v-show="$route.name==='chat' && chat"
       />
     </div>
   </div>
@@ -15,6 +17,8 @@
 <script>
 import imgUrl from "@/assets/avatar.jpg";
 import ChatHead from "@/components/chat-header.vue";
+import SearchBar from "@/components/search-bar.vue";
+import { mapGetters } from "vuex";
 export default {
   props: {},
   data() {
@@ -27,14 +31,18 @@ export default {
         userName: "culler",
         userDetail: "Culler( 前端--什么玩意儿~)"
       };
-    }
+    },
+    ...mapGetters(["chat"])
   },
   created() {},
-  mounted() {},
+  mounted() {
+    console.log(this.chat);
+  },
   watch: {},
   methods: {},
   components: {
-    ChatHead
+    ChatHead,
+    SearchBar
   }
 };
 </script>

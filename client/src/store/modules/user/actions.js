@@ -28,8 +28,6 @@ export default {
             if (res.code == 200) {
                 console.log(res)
                 const { user } = res.data
-                // localStorage.setItem("token", token)
-               
                 commit("setUser", user)
                 return true
             } else {

@@ -23,11 +23,17 @@ router.post('/login', async ctx => {
 })
 
 router.get('/getList', async ctx => {
-    console.log("get")
     let res = await UserModel.find();
-
     ctx.body = res;
 })
+
+router.get('/getuser', async ctx => {
+    const { name } = ctx.query;
+    let user = await UserModel.findOne({ name });
+    assert(user, '用户名不存在');
+    ctx.body = user;
+})
+
 
 router.post('/register', async ctx => {
     const { name, password } = ctx.request.body;

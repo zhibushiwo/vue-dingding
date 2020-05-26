@@ -40,22 +40,22 @@ export default {
       friends: [
         {
           avatar: imgUrl,
-          name: "河马3",
+          name: "hippo3",
           state: 0
         },
         {
           avatar: imgUrl,
-          name: "河马4",
+          name: "hippo4",
           state: 0
         },
         {
           avatar: imgUrl,
-          name: "河马",
+          name: "hippo",
           state: 1
         },
         {
           avatar: imgUrl,
-          name: "河马",
+          name: "hippo",
           state: 1
         }
       ]

@@ -30,5 +30,6 @@ function handleRequest(config) {
     if (localStorage.token) {
         config.headers.Authorization = `Bearer ${localStorage.token}`
     }
+    console.log(config)
     return config;
 }
