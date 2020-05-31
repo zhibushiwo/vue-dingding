@@ -1,6 +1,7 @@
 const Router = require("koa-router");
 const router = new Router();
 const UserModel = require("../models/user");
+const MessageModel = require("../models/message")
 const assert = require("assert")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
@@ -22,7 +23,8 @@ router.post('/login', async ctx => {
     };
 })
 
-router.get('/getList', async ctx => {
+router.get('/getlinkmen', async ctx => {
+    const { user } = ctx.state
     let res = await UserModel.find();
     ctx.body = res;
 })
@@ -45,11 +47,11 @@ router.post('/register', async ctx => {
         avatar: ''
     }
     let newUser = new UserModel(user);
-    bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(newUser.password, salt, (error, hash) => {
+    bcrypt.genSalt(10, async (err, salt) => {
+        await bcrypt.hash(newUser.password, salt, async (error, hash) => {
             if (error) throw err;
             newUser.password = hash
-            newUser.save()
+            await newUser.save()
             ctx.body = newUser;
         })
     })

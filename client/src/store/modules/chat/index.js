@@ -1,12 +1,16 @@
-import state from './state'
-import * as getters from './getters'
-import mutations from './mutations'
-import actions from './actions'
-
 export default {
-    namespaced: false,
-    state,
-    getters,
-    mutations,
-    actions,
+    state: {
+        chat: null
+    },
+    getters: {
+        chat: (state) => state.chat
+    },
+    mutations: {
+        setChat(state, chat) {
+            state.chat = chat
+        }
+    },
+    actions: {
+
+    },
 }

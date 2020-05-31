@@ -17,7 +17,7 @@
         :name="item.name"
         class="friend"
       >
-        <el-button type="primary" v-if="item.state ==0">接受</el-button>
+        <el-button type="primary" v-if="item.state ==0" @click="accept(item)">接受</el-button>
         <span class="addinfo" v-else>已添加</span>
       </FriendItem>
     </div>
@@ -28,6 +28,7 @@
 import FriendItem from "./components/friend-item";
 import ContactNav from "./components/contact-nav";
 import imgUrl from "@/assets/avatar.jpg";
+import { GetNewFriends, AcceptFriend } from "@/api/friend";
 export default {
   props: {},
   data() {
@@ -37,35 +38,43 @@ export default {
         iconColor: "green",
         title: "新的好友"
       },
-      friends: [
-        {
-          avatar: imgUrl,
-          name: "hippo3",
-          state: 0
-        },
-        {
-          avatar: imgUrl,
-          name: "hippo4",
-          state: 0
-        },
-        {
-          avatar: imgUrl,
-          name: "hippo",
-          state: 1
-        },
-        {
-          avatar: imgUrl,
-          name: "hippo",
-          state: 1
-        }
-      ]
+      friends: []
     };
   },
   computed: {},
   created() {},
-  mounted() {},
+  mounted() {
+    this.getData();
+  },
   watch: {},
-  methods: {},
+  methods: {
+    async getData() {
+      const res = await GetNewFriends();
+      if (res.code == 200) {
+        this.friends = res.data.map(({ name, _id, state }) => {
+          return {
+            avatar: imgUrl,
+            name,
+            state,
+            _id
+          };
+        });
+      }
+    },
+    async accept(friend) {
+      console.log(friend);
+      const res = await AcceptFriend({
+        fid: friend._id
+      });
+      if (res.code == 200) {
+        this.$message({
+          message: "添加成功",
+          type: "success"
+        });
+        this.getData();
+      }
+    }
+  },
   components: {
     FriendItem,
     ContactNav
@@ -85,7 +94,7 @@ export default {
     .nav {
       border-bottom: 0;
     }
-    .showAll{
+    .showAll {
       color: $theme-color;
       font-size: 18px;
     }
@@ -94,7 +103,7 @@ export default {
     padding-left: 20px;
     .addinfo {
       color: #ccc;
-      margin-right:10px;
+      margin-right: 10px;
     }
   }
 }

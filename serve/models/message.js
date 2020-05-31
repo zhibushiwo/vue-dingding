@@ -6,14 +6,19 @@ const MessageSchema = new Schema({
         ref: "Users"
     },
     to: {
-        type: Schema.Types.ObjectId,
-        ref: "Users"
+        type: String
     },
-    time: {
-        type: Date
+    createAt: {
+        type: Date,
+        default: new Date()
+    },
+    type: {
+        type: Date,
+        enum: ['text', 'image', 'code', 'invite', 'system'],
     },
     msg: {
-        type: String
+        type: String,
+        default: ''
     }
 })
 

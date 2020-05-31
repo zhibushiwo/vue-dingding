@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import { GetMyFriends } from "@/api/friend";
 import FriendItem from "./components/friend-item";
 import ContactNav from "./components/contact-nav";
 import imgUrl from "@/assets/avatar.jpg";
@@ -35,35 +36,30 @@ export default {
         title: "我的好友",
         to: "/contact/friends"
       },
-      friends: [
-        {
-          avatar: imgUrl,
-          name: "hippo1"
-        },
-        {
-          avatar: imgUrl,
-          name: "hippo2"
-        },
-        {
-          avatar: imgUrl,
-          name: "hippo"
-        },
-        {
-          avatar: imgUrl,
-          name: "hippo"
-        },
-        {
-          avatar: imgUrl,
-          name: "hippo"
-        }
-      ]
+      friends: []
     };
   },
   computed: {},
   created() {},
-  mounted() {},
+  mounted() {
+    this.getData();
+  },
   watch: {},
-  methods: {},
+  methods: {
+    async getData() {
+      const res = await GetMyFriends();
+      if (res.code == 200) {
+        this.friends = res.data.map(({ name, _id }) => {
+          return {
+            avatar: imgUrl,
+            name,
+            id: _id
+          };
+        });
+      }
+      console.log(res);
+    }
+  },
   components: {
     FriendItem,
     ContactNav

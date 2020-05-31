@@ -21,7 +21,7 @@ export default {
     },
     contacts: {
       type: String,
-      default: "hippo"
+      default: "culler"
     },
     contactContent: {
       type: String,

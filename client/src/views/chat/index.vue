@@ -1,13 +1,13 @@
 <template>
   <div class="message">
-    <Histroy class="history" />
+    <LinkMan class="linkman" />
     <Main class="main" />
   </div>
 </template>
 
 <script>
 import Main from "./components/main";
-import Histroy from "./components/history";
+import LinkMan from "./components/linkman";
 export default {
   props: {},
   data() {
@@ -20,7 +20,7 @@ export default {
   methods: {},
   components: {
     Main,
-    Histroy
+    LinkMan
   }
 };
 </script>
@@ -29,7 +29,7 @@ export default {
 .message {
   height: 100%;
   display: flex;
-  .history {
+  .linkman {
     width: $aside-width;
     overflow: auto;
     height: 100%;

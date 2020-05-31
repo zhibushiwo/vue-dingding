@@ -9,6 +9,7 @@ const response_formatter = require("./middlewares/response_formatter")
 //const passport = require("passport");
 const Koajwt = require('koa-jwt');
 const keys = require("./config/key");
+const GetCurrentUser = require("./middlewares/curuser")
 //const tokenAccess = require("./middlewares/tokenAccess")
 mongoose.connect(db, { useNewUrlParser: true })
     .then(() => console.log("db connet"))
@@ -23,6 +24,7 @@ app.use(
         path: [/\/user\/login/, /\/user\/register/]
     })
 );
+app.use(GetCurrentUser())
 //app.use(tokenAccess)
 // app.use(passport.initialize());
 // require("./config/passport")(passport);

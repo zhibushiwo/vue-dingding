@@ -9,8 +9,12 @@ const GroupsSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Users"
     },
-    create_at: {
+    member: {
+        type: Schema.Types.ObjectId,
+        ref: "Users"
+    },
+    create_at: [{
         type: Date
-    }
+    }],
 })
 module.exports = mongoose.model("Groups", GroupsSchema)

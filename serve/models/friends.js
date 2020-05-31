@@ -14,7 +14,8 @@ const FriendsSchema = new Schema({
         default: 0
     },
     create_at: {
-        type: Date
+        type: Date,
+        default: new Date()
     }
 })
 

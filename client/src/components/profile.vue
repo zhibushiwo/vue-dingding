@@ -1,5 +1,5 @@
 <template>
-  <div class="profile" @mousedown="mousedown" ref="profile">
+  <div class="profile" @mousedown.stop="mousedown" ref="profile">
     <div class="header">
       <div class="intro">
         <h1>culler</h1>
@@ -28,14 +28,14 @@
         加油部-FGNB组
       </p>
       <el-divider></el-divider>
-      <el-button size="small" type="primary" class="btn">发消息</el-button>
+      <el-button size="small" type="primary" class="btn" @click="addFriend">加好友</el-button>
     </div>
   </div>
 </template>
 
 <script>
 import avatar from "@/assets/avatar.jpg";
-import { debounce } from "@/utils";
+import { AddFriend } from "@/api/friend";
 export default {
   props: {
     profile: {
@@ -50,10 +50,14 @@ export default {
   },
   computed: {},
   created() {},
-  mounted() {},
+  mounted() {
+    console.log(this.profile);
+  },
   watch: {},
   methods: {
     mousedown(event) {
+      event.preventDefault()
+      console.log(event.target);
       this.selectElement = this.$refs.profile;
       var div1 = this.selectElement;
       this.selectElement.style.cursor = "move";
@@ -67,7 +71,11 @@ export default {
         if (oevent.clientY + div1.offsetHeight / 2 - distanceY < 0) {
           return false;
         }
-        console.log( event.clientX,this.selectElement.offsetLeft, oevent.clientX)
+        console.log(
+          event.clientX,
+          this.selectElement.offsetLeft,
+          oevent.clientX
+        );
         div1.style.left = oevent.clientX - distanceX + "px";
         div1.style.top = oevent.clientY - distanceY + "px";
       };
@@ -77,6 +85,24 @@ export default {
         document.onmouseup = null;
         div1.style.cursor = "default";
       };
+    },
+    async addFriend() {
+      console.log(1)
+      const res = await AddFriend({
+        fid: this.profile._id
+      });
+      if (res.code == 200) {
+        this.$message({
+          message: "恭喜你们已结为好友",
+          type: "success"
+        });
+        this.$emit("close");
+      } else {
+        this.$message({
+          message: res.msg,
+          type: "warning"
+        });
+      }
     }
   },
   components: {}

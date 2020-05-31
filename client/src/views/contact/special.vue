@@ -36,11 +36,11 @@ export default {
       friends: [
         {
           avatar: imgUrl,
-          name: "hippo1"
+          name: "culler1"
         },
         {
           avatar: imgUrl,
-          name: "hippo2"
+          name: "culler2"
         }
       ]
     };

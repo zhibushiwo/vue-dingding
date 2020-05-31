@@ -2,7 +2,7 @@
   <div class="searchbar">
     <el-input v-model="input" placeholder="搜索" prefix-icon="el-icon-search"></el-input>
     <el-button icon="el-icon-plus" circle size="mini" class="btn_add" @click="dialogVisible = true"></el-button>
-    <Profile class="profile" v-show="showProfile" />
+    <Profile @close="showProfile=false" class="profile" :profile="result" v-show="showProfile" />
     <el-dialog
       title="寻找用户"
       :visible.sync="dialogVisible"
@@ -25,6 +25,7 @@
 </template>
 <script>
 import { GetSearchUser } from "@/api/user";
+
 import Profile from "./profile";
 export default {
   props: {},
@@ -33,6 +34,7 @@ export default {
       input: "",
       dialogVisible: false,
       user: "",
+      result: null,
       showProfile: false
     };
   },
@@ -52,9 +54,10 @@ export default {
         });
         return;
       }
+      this.input = "";
+      this.result = res.data;
       this.dialogVisible = false;
       this.showProfile = true;
-      console.log(res);
     }
   },
   components: {
@@ -74,6 +77,7 @@ export default {
   }
   .profile {
     position: fixed;
+    z-index: 10;
     top: 10px;
     right: 10px;
   }
