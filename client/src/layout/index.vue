@@ -19,7 +19,7 @@ export default {
   },
   async mounted() {
     if (!this.isLogin) {
-      await this.authorization();
+      //await this.authorization();
       // if (!this.isLogin) {
       //   this.$router.push("/login");
       // }

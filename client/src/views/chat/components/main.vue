@@ -11,14 +11,17 @@
           class="msg-item"
         />
       </div>
-      <div class="editor"></div>
+      <ChatEdit class="editor" />
     </div>
     <Empty v-else />
   </div>
 </template>
 
 <script>
+import { GetMessage } from "@/api/message";
+
 import Msg from "@/components/msg-item.vue";
+import ChatEdit from "./chat-edit";
 import { mapGetters } from "vuex";
 import Empty from "./empty";
 export default {
@@ -77,9 +80,35 @@ export default {
   computed: {
     ...mapGetters(["chat"])
   },
+  methods: {
+    async GetData() {
+      const res = await GetMessage({
+        fid: this.chat._id
+      });
+      if (res.code == 200) {
+        this.msgData = res.data.map(({ msg, type, createAt, isSend }) => {
+          return {
+            content: msg,
+            time: createAt,
+            type,
+            isSend
+          };
+        });
+      }
+    }
+  },
+  mounted() {},
+  watch: {
+    "chat._id": function(val, old) {
+      if (val != old) {
+        this.GetData();
+      }
+    }
+  },
   components: {
     Msg,
-    Empty
+    Empty,
+    ChatEdit
   }
 };
 </script>
@@ -88,6 +117,8 @@ export default {
 .chatMain {
   display: flex;
   flex-direction: column;
+  height: 100%;
+  background-color: $message-bg-color;
   .msgContent {
     flex: 1;
     padding: 10px;

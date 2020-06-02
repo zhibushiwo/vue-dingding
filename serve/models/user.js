@@ -12,4 +12,6 @@ const UserSchema = new Schema({
         type:String
     }
 })
+
+// TODO: pre validate
 module.exports = mongoose.model("Users", UserSchema)

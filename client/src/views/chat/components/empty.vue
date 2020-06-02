@@ -1,6 +1,7 @@
 <template>
   <div class="welcome">
     <!-- <img :src="welcome" alt srcset /> -->
+    <!-- TODO: 首页图 -->
     <p>妮好世界</p>
   </div>
 </template>

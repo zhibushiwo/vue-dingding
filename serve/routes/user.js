@@ -6,6 +6,7 @@ const assert = require("assert")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const keys = require("../config/key")
+
 router.post('/login', async ctx => {
     const { name, password } = ctx.request.body;
     const user = await UserModel.findOne({ name });
@@ -47,11 +48,15 @@ router.post('/register', async ctx => {
         avatar: ''
     }
     let newUser = new UserModel(user);
+    await newUser.save()
     bcrypt.genSalt(10, async (err, salt) => {
         await bcrypt.hash(newUser.password, salt, async (error, hash) => {
             if (error) throw err;
             newUser.password = hash
+            console.log(1)
+            // TODO: await顺序有问题
             await newUser.save()
+            console.log(12)
             ctx.body = newUser;
         })
     })

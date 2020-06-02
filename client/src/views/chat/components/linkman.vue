@@ -3,6 +3,7 @@
     <ChatItem
       v-for="(item,index ) in linkMan"
       :key="index"
+      :contacts="item.name"
       class="chat-item"
       :class="chat&&chat._id ==item._id?'active':'' "
       @click.native="setCurrent(item)"
@@ -29,6 +30,7 @@ export default {
   async mounted() {
     const res = await GetMyFriends();
     if (res.code == 200) {
+      console.log(res.data);
       this.linkMan = res.data;
     }
   },

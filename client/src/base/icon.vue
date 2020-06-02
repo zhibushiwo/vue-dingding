@@ -3,7 +3,7 @@ import { toRem } from "@/utils";
 export default {
   name: "Icon",
   props: {
-    siez: {
+    size: {
       type: Number,
       default: 16
     },

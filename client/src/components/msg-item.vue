@@ -1,5 +1,6 @@
 <script>
 import imgUrl from "@/assets/avatar.jpg";
+import { formatDate } from "@/utils";
 export default {
   props: {
     avatar: {
@@ -27,7 +28,7 @@ export default {
   render() {
     return (
       <div class={`msg-item  ${this.isSend === 0 ? "mine" : ""}`}>
-        <div class="time">{this.time}</div>
+        <div class="time">{ formatDate(this.time,'hh:mm') }</div>
         <div class="avatarWrap">
           <img src={this.avatar} />
         </div>
@@ -75,8 +76,8 @@ export default {
       right: 50px;
     }
     .content {
-      background: $theme-color;
-      color: #fff;
+      background: $my-msg-bg-color;
+      color: $my-msg-color;
       border-radius: 8px 3px 8px 8px;
     }
   }
