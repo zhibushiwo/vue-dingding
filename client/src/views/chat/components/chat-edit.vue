@@ -56,7 +56,7 @@ export default {
         to: this.chat._id
       });
       if (res.code == 200) {
-        
+        this.msg = "";
       }
     }
   },
