@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="chatMain" v-if="chat">
-      <div class="msgContent">
+    <div class="chatMain">
+      <div class="msgContent" ref="msgContent">
         <Msg
           v-for="(item,index) in msgData"
           :key="index"
@@ -13,17 +13,15 @@
       </div>
       <ChatEdit class="editor" />
     </div>
-    <Empty v-else />
   </div>
 </template>
 
 <script>
 import { GetMessage } from "@/api/message";
-
+import { scrollToBottom } from "@/utils";
 import Msg from "@/components/msg-item.vue";
 import ChatEdit from "./chat-edit";
 import { mapGetters } from "vuex";
-import Empty from "./empty";
 export default {
   data() {
     return {
@@ -97,22 +95,29 @@ export default {
       }
     }
   },
-  sockets:{
-    getmsg(msg){
-      console.log(msg)
+  sockets: {
+    getmsg(msg) {
+      this.GetData();
     }
   },
-  mounted() {},
-  // watch: {
-  //   "chat._id": function(val, old) {
-  //     if (val != old) {
-  //       this.GetData();
-  //     }
-  //   }
-  // },
+  mounted() {
+    this.chat && this.GetData();
+  },
+  watch: {
+    "chat._id": function(val, old) {
+      if (val != old) {
+        this.GetData();
+      }
+    },
+    msgData() {
+      
+      this.$nextTick(()=>{
+         scrollToBottom(this.$refs.msgContent);
+      })
+    }
+  },
   components: {
     Msg,
-    Empty,
     ChatEdit
   }
 };

@@ -7,6 +7,7 @@ export default {
         user: null
     },
     getters: {
+        user: (state) => state.user,
         isLogin: (state) => isDef(state.user)
     },
     mutations: {
@@ -40,9 +41,7 @@ export default {
             try {
                 const res = await GetUserInfo()
                 if (res.code == 200) {
-                    console.log(res)
-                    const { user } = res.data
-                    commit("setUser", user)
+                    commit("setUser", res.data)
                     return true
                 } else {
                     Message(res.msg)

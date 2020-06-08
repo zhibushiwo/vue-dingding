@@ -31,10 +31,14 @@ router.get('/getlinkmen', async ctx => {
 })
 
 router.get('/getuser', async ctx => {
-    const { name } = ctx.query;
-    let user = await UserModel.findOne({ name });
-    assert(user, '用户名不存在');
-    ctx.body = user;
+    const { user } = ctx.state
+    let my = await UserModel.findById(user._id).select({
+        avatar: 1,
+        name: 1,
+        _id: 1
+    });
+    assert(my, '用户名不存在');
+    ctx.body = my;
 })
 
 

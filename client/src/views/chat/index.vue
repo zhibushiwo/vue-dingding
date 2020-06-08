@@ -1,25 +1,32 @@
 <template>
   <div class="message">
     <LinkMan class="linkman" />
-    <Main class="main" />
+    <Main class="main" v-if="chat" />
+    <Empty v-else />
   </div>
 </template>
 
 <script>
 import Main from "./components/main";
 import LinkMan from "./components/linkman";
+import Empty from "./components/empty";
+import { mapGetters } from "vuex";
+
 export default {
   props: {},
   data() {
     return {};
   },
-  computed: {},
+  computed: {
+    ...mapGetters(["chat"])
+  },
   created() {},
   mounted() {},
   watch: {},
   methods: {},
   components: {
     Main,
+    Empty,
     LinkMan
   }
 };

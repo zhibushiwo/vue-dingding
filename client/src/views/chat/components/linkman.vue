@@ -25,19 +25,21 @@ export default {
     ChatItem
   },
   computed: {
-    ...mapGetters(["chat"])
+    ...mapGetters(["chat", "user"])
   },
   async mounted() {
     const res = await GetMyFriends();
     if (res.code == 200) {
-      console.log(res.data);
       this.linkMan = res.data;
     }
   },
   methods: {
     setCurrent(item) {
-      console.log(1);
       this.setChat(item);
+      this.$socket.emit("join", {
+        uid: this.user._id,
+        fid: this.chat._id
+      });
     },
     ...mapMutations(["setChat"])
   }

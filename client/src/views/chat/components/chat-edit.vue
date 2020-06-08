@@ -42,20 +42,25 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["chat"])
+    ...mapGetters(["chat", "user"])
   },
   created() {},
   mounted() {},
   watch: {},
   methods: {
     async send() {
+      console.log(this.msg)
       if (this.msg == "") return false;
-      console.log(this.msg);
+      let msg = this.msg;
+      this.msg = "";
+      console.log(this.msg)
       this.$socket.emit("sendmsg", {
+        from: this.user._id,
         type: "text",
-        msg: this.msg,
+        msg,
         to: this.chat._id
       });
+
       // const res = await SendMessage({
       //   type: "text",
       //   msg: this.msg,
