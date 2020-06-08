@@ -2,7 +2,7 @@
   <div class="searchbar">
     <el-input v-model="input" placeholder="搜索" prefix-icon="el-icon-search"></el-input>
     <el-button icon="el-icon-plus" circle size="mini" class="btn_add" @click="dialogVisible = true"></el-button>
-    <Profile @close="showProfile=false" class="profile" :profile="result" v-show="showProfile" />
+    <Profile @close="showProfile=false" class="profile" :profile="result" v-if="showProfile" />
     <el-dialog
       title="寻找用户"
       :visible.sync="dialogVisible"

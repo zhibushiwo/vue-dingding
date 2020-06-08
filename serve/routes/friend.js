@@ -5,16 +5,16 @@ const FriendModel = require("../models/friends")
 router.post('/addFriend', async ctx => {
     const { fid } = ctx.request.body;
     const { user } = ctx.state;
-    assert(fid != user.id, '不能加自己')
+    assert(fid != user._id, '不能加自己')
     const isExist = await FriendModel.exists({
         "$or": [
-            { 'UserA': user.id, 'UserB': fid },
-            { 'UserA': fid, 'UserB': user.id }
+            { 'UserA': user._id, 'UserB': fid },
+            { 'UserA': fid, 'UserB': user._id }
         ]
     });
     assert(!isExist, '你两已经是好友了')
     const friend = new FriendModel({
-        UserA: user.id,
+        UserA: user._id,
         UserB: fid
     })
     friend.save()
@@ -22,12 +22,12 @@ router.post('/addFriend', async ctx => {
 
 router.get('/getMyFriend', async ctx => {
     const { user } = ctx.state;
-    const friendA = await FriendModel.find({ UserA: user.id, state: 1 }).populate("UserB", {
+    const friendA = await FriendModel.find({ UserA: user._id, state: 1 }).populate("UserB", {
         name: 1,
         _id: 1
     }).exec()
 
-    const friendB = await FriendModel.find({ UserB: user.id, state: 1 }).populate("UserA", {
+    const friendB = await FriendModel.find({ UserB: user._id, state: 1 }).populate("UserA", {
         name: 1,
         _id: 1
     }).exec()
@@ -39,7 +39,7 @@ router.get('/getMyFriend', async ctx => {
 
 router.get('/getnewfriend', async ctx => {
     const { user } = ctx.state;
-    const friendB = await FriendModel.find({ UserB: user.id }).populate("UserA", {
+    const friendB = await FriendModel.find({ UserB: user._id }).populate("UserA", {
         name: 1,
         state: 1,
         _id: 1
@@ -62,7 +62,7 @@ router.post('/acceptfriend', async ctx => {
     const { user } = ctx.state;
     const { fid } = ctx.request.body
     console.log(user, fid)
-    const friend = await FriendModel.findOneAndUpdate({ UserA: fid, UserB: user.id }, { state: 1 })
+    const friend = await FriendModel.findOneAndUpdate({ UserA: fid, UserB: user._id }, { state: 1 })
 })
 
 module.exports = router

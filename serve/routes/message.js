@@ -11,7 +11,7 @@ router.post("/sendmessage", async ctx => {
         to,
         msg,
         type,
-        from: user.id
+        from: user._id
     })
     console.log(message)
     await message.save()
@@ -22,8 +22,8 @@ router.get("/getmessage", async ctx => {
     const { fid } = ctx.query;
     const msgs = await MsgModel.find({
         "$or": [
-            { 'from': user.id, 'to': fid },
-            { 'from': fid, 'to': user.id }
+            { 'from': user._id, 'to': fid },
+            { 'from': fid, 'to': user._id }
         ]
     }).sort({
         createAt: 1
@@ -36,7 +36,7 @@ router.get("/getmessage", async ctx => {
         type,
         msg
     }) => {
-        const isSend = from == user.id ? 0 : 1
+        const isSend = from == user._id ? 0 : 1
         return {
             isSend,
             from,

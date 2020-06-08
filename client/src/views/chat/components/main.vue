@@ -97,14 +97,19 @@ export default {
       }
     }
   },
-  mounted() {},
-  watch: {
-    "chat._id": function(val, old) {
-      if (val != old) {
-        this.GetData();
-      }
+  sockets:{
+    getmsg(msg){
+      console.log(msg)
     }
   },
+  mounted() {},
+  // watch: {
+  //   "chat._id": function(val, old) {
+  //     if (val != old) {
+  //       this.GetData();
+  //     }
+  //   }
+  // },
   components: {
     Msg,
     Empty,

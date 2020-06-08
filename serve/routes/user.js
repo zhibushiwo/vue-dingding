@@ -14,7 +14,7 @@ router.post('/login', async ctx => {
     const isMatch = bcrypt.compare(password, user.password)
     assert(isMatch, '密码错误');
     const rule = {
-        id: user.id,
+        _id: user._id,
         name: user.name
     }
     const token = jwt.sign(rule, keys.secretKey, { expiresIn: '24h' })

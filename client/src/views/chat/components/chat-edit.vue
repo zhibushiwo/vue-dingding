@@ -50,14 +50,20 @@ export default {
   methods: {
     async send() {
       if (this.msg == "") return false;
-      const res = await SendMessage({
+      console.log(this.msg);
+      this.$socket.emit("sendmsg", {
         type: "text",
         msg: this.msg,
         to: this.chat._id
       });
-      if (res.code == 200) {
-        this.msg = "";
-      }
+      // const res = await SendMessage({
+      //   type: "text",
+      //   msg: this.msg,
+      //   to: this.chat._id
+      // });
+      // if (res.code == 200) {
+      //   this.msg = "";
+      // }
     }
   },
   components: {}
