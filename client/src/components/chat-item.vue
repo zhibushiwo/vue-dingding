@@ -7,7 +7,10 @@
       <div class="contacts">{{contacts}}</div>
       <div class="contactContent">{{contactContent}}</div>
     </div>
-    <div class="time">{{time}}</div>
+    <div class="right">
+      <div class="time">{{time}}</div>
+      <el-badge :value="unread" v-show="unread>0"></el-badge>
+    </div>
   </div>
 </template>
 
@@ -30,6 +33,10 @@ export default {
     time: {
       type: String,
       default: "10:05"
+    },
+    unread: {
+      type: Number,
+      default: 0
     }
   },
   methods: {
@@ -46,7 +53,7 @@ export default {
   height: 70px;
   padding: 10px;
   align-items: center;
-  &:hover{
+  &:hover {
     background: #eee;
   }
   .avatar-wrap {
@@ -71,9 +78,16 @@ export default {
       @include text-ellipsis;
     }
   }
-  .time {
-    color: #888;
-    align-self: flex-start;
+  .right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    .time {
+      color: #888;
+      align-self: flex-start;
+      margin: 6px 0;
+    }
   }
 }
 </style>

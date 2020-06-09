@@ -27,7 +27,6 @@ export default {
 <style scoped lang="scss">
 .welcome {
   height: 100%;
-  width: 100%;
   @include flex-center(column);
 }
 </style>

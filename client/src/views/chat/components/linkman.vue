@@ -1,11 +1,13 @@
 <template>
   <div class="history">
     <ChatItem
-      v-for="(item,index ) in linkMan"
+      v-for="(item,index ) in Conversation"
       :key="index"
       :contacts="item.name"
+      :contactContent="item.lastMsg"
       class="chat-item"
-      :class="chat&&chat._id ==item._id?'active':'' "
+      :class="CurrentChat&&CurrentChat._id ==item._id?'active':'' "
+      :unread="item.unread"
       @click.native="setCurrent(item)"
     />
   </div>
@@ -25,23 +27,23 @@ export default {
     ChatItem
   },
   computed: {
-    ...mapGetters(["chat", "user"])
+    ...mapGetters(["CurrentChat", "user", "Conversation"])
   },
   async mounted() {
     const res = await GetMyFriends();
     if (res.code == 200) {
-      this.linkMan = res.data;
+      this.setConversation(res.data);
     }
   },
   methods: {
     setCurrent(item) {
-      this.setChat(item);
+      this.setCurrentChat(item);
       this.$socket.emit("join", {
         uid: this.user._id,
-        fid: this.chat._id
+        fid: this.CurrentChat._id
       });
     },
-    ...mapMutations(["setChat"])
+    ...mapMutations(["setCurrentChat", "setConversation"])
   }
 };
 </script>

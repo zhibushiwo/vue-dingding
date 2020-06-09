@@ -10,8 +10,7 @@
 import DingHead from "./components/ding-head";
 import DingSideBar from "./components/ding-sidebar";
 import DingContent from "./components/ding-content";
-import { mapGetters } from "vuex";
-import { mapActions } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 export default {
   name: "Layout",
   data() {
@@ -20,6 +19,7 @@ export default {
   async mounted() {
     if (!this.isLogin) {
       await this.authorization();
+      this.$socket.emit("joinroom", this.user._id);
       //await this.authorization();
       // if (!this.isLogin) {
       //   this.$router.push("/login");
@@ -27,10 +27,24 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["authorization"])
+    ...mapActions(["authorization"]),
+    ...mapMutations(["addUnRead", "removeUnRead"])
+  },
+  sockets: {
+    getmsg(msgData) {
+      if (!this.CurrentChat || this.CurrentChat._id != msgData.from) {
+        this.addUnRead(msgData);
+      }
+    }
   },
   computed: {
-    ...mapGetters(["isLogin"])
+    ...mapGetters(["isLogin", "CurrentChat", "user"])
+  },
+  watch: {
+    "CurrentChat._id": function(val) {
+      console.log(val);
+      this.removeUnRead(val);
+    }
   },
   components: {
     DingHead,

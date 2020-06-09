@@ -24,16 +24,28 @@ io.on("connection", socket => {
             console.log(1)
         })
     })
+    socket.on("joinroom", data => {
+        socket.join(data)
+    })
+
+
     socket.on("sendmsg", async message => {
-        console.log(2)
         const { from, to, type, msg } = message
         const mes = new Message({
             from, to, type, msg
         })
         await mes.save()
         const arr = [from, to].sort((prev, next) => { return prev.localeCompare(next) })
-        console.log(arr[0] + '_' + arr[1], msg)
-        io.in(arr[0] + '_' + arr[1]).emit("getmsg", msg)
+        io.in(arr[0] + '_' + arr[1]).emit("getmsg", {
+            from,
+            type,
+            msg
+        })
+        io.to(to).emit("getmsg", {
+            from,
+            type,
+            msg
+        })
     })
 })
 

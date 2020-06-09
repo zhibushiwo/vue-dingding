@@ -1,8 +1,8 @@
 <template>
   <div class="message">
     <LinkMan class="linkman" />
-    <Main class="main" v-if="chat" />
-    <Empty v-else />
+    <Main class="main" v-if="CurrentChat" />
+    <Empty class="empty" v-else />
   </div>
 </template>
 
@@ -18,7 +18,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters(["chat"])
+    ...mapGetters(["CurrentChat"])
   },
   created() {},
   mounted() {},
@@ -44,6 +44,10 @@ export default {
   .main {
     flex: 1;
     background-color: $main-bg-color;
+    height: 100%;
+  }
+  .empty {
+    flex: 1;
     height: 100%;
   }
 }

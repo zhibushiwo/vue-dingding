@@ -76,12 +76,12 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["chat"])
+    ...mapGetters(["CurrentChat"])
   },
   methods: {
     async GetData() {
       const res = await GetMessage({
-        fid: this.chat._id
+        fid: this.CurrentChat._id
       });
       if (res.code == 200) {
         this.msgData = res.data.map(({ msg, type, createAt, isSend }) => {
@@ -101,10 +101,10 @@ export default {
     }
   },
   mounted() {
-    this.chat && this.GetData();
+    this.CurrentChat && this.GetData();
   },
   watch: {
-    "chat._id": function(val, old) {
+    "CurrentChat._id": function(val, old) {
       if (val != old) {
         this.GetData();
       }

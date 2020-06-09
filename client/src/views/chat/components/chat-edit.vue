@@ -42,7 +42,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["chat", "user"])
+    ...mapGetters(["CurrentChat", "user"])
   },
   created() {},
   mounted() {},
@@ -58,7 +58,7 @@ export default {
         from: this.user._id,
         type: "text",
         msg,
-        to: this.chat._id
+        to: this.CurrentChat._id
       });
 
       // const res = await SendMessage({

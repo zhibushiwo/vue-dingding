@@ -1,3 +1,3 @@
 export default {
-    chat: null
+    CurrentChat: null
 }

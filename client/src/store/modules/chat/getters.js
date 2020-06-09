@@ -1,1 +1,1 @@
-export const chat = (state) => state.chat
+export const CurrentChat = (state) => state.CurrentChat

@@ -8,7 +8,7 @@
         :avatar="user.avatar"
         :userName="user.userName"
         :userDetail="user.userDetail"
-        v-show="$route.name==='chat' && chat"
+        v-show="$route.name==='chat' && CurrentChat"
       />
     </div>
   </div>
@@ -32,11 +32,11 @@ export default {
         userDetail: "Culler( 前端--什么玩意儿~)"
       };
     },
-    ...mapGetters(["chat"])
+    ...mapGetters(["CurrentChat"])
   },
   created() {},
   mounted() {
-    console.log(this.chat);
+    console.log(this.CurrentChat);
   },
   watch: {},
   methods: {},
