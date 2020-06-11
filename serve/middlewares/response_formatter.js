@@ -8,10 +8,10 @@ const response_formatter = () => async (ctx, next) => {
         }
     } else {
         // TODO: 404 not found
-        ctx.body = {
-            code: 200,
-            message: ""
-        }
+        // ctx.body = {
+        //     code: 200,
+        //     message: ""
+        // }
     }
 }
 module.exports = response_formatter

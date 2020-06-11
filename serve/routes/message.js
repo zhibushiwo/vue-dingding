@@ -17,6 +17,10 @@ router.post("/sendmessage", async ctx => {
     await message.save()
 })
 
+router.post("/upload", async ctx => {
+    
+})
+
 router.get("/getmessage", async ctx => {
     const { user } = ctx.state;
     const { fid } = ctx.query;

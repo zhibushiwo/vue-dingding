@@ -1,7 +1,7 @@
 const Koa = require('koa');
 const app = new Koa();
 const mongoose = require("mongoose");
-const KoaBodyParse = require("koa-bodyparser");
+const KoaBody = require("koa-body");
 const db = require("./config/key").mongoURI;
 const routes = require("./routes");
 const catchError = require("./middlewares/catchError")
@@ -14,7 +14,9 @@ const Socket = require("socket.io")
 const http = require("http")
 const server = http.createServer(app.callback()).listen(3008)
 const io = Socket(server)
+const static = require("koa-static")
 const Message = require("./models/message")
+const path = require("path")
 
 io.on("connection", socket => {
     socket.on("join", data => {
@@ -53,14 +55,20 @@ io.on("connection", socket => {
 mongoose.connect(db, { useNewUrlParser: true })
     .then(() => console.log("db connet"))
     .catch(err => console.log("err" + err));
-app.use(KoaBodyParse());
-app.use(catchError())
-app.use(response_formatter())
+
+app.use(static(path.join(__dirname, './public')))
+app.use(KoaBody({
+    multipart: true,
+    formidable: {
+        maxFieldsSize: 2 * 1024 * 1024,
+    }
+}));
+
 app.use(
     Koajwt({
         secret: keys.secretKey
     }).unless({
-        path: [/\/user\/login/, /\/user\/register/]
+        path: [/\/user\/login/, /\/user\/register/, /\/public/]
     })
 );
 app.use(GetCurrentUser())
@@ -69,4 +77,8 @@ app.use(GetCurrentUser())
 // require("./config/passport")(passport);
 
 app.use(routes.routes(), routes.allowedMethods());
+
+app.use(catchError())
+app.use(response_formatter())
+
 app.listen(3001);

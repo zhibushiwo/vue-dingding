@@ -2,7 +2,15 @@
   <div class="edit">
     <div class="header">
       <Icon type="im_face" :size="18" />
-      <Icon type="photo" :size="18" />
+      <el-upload
+        ref="imgUpload"
+        action
+        :on-change="handleChange"
+        :http-request="upload"
+        accept="image/gif, image/jpeg, image/jpg, image/png, image/svg"
+      >
+        <Icon type="photo" :size="18" />
+      </el-upload>
       <Icon type="likegood" :size="18" />
       <Icon type="more" :size="18" />
     </div>
@@ -33,12 +41,14 @@
 
 <script>
 import { SendMessage } from "@/api/message";
+import { UploadFile } from "@/api/global";
 import { mapGetters } from "vuex";
 export default {
   props: {},
   data() {
     return {
-      msg: ""
+      msg: "",
+      fileList: []
     };
   },
   computed: {
@@ -48,12 +58,22 @@ export default {
   mounted() {},
   watch: {},
   methods: {
+    handleChange(file) {
+      console.log("select-----", file);
+    },
+    async upload(file) {
+      console.log("upload-----", file);
+      let formData = new FormData();
+      formData.append("file", file.file);
+      let res = await UploadFile(formData);
+      console.log(res);
+    },
     async send() {
-      console.log(this.msg)
+      console.log(this.msg);
       if (this.msg == "") return false;
       let msg = this.msg;
       this.msg = "";
-      console.log(this.msg)
+      console.log(this.msg);
       this.$socket.emit("sendmsg", {
         from: this.user._id,
         type: "text",
@@ -84,8 +104,10 @@ export default {
   .header {
     height: 40px;
     padding: 7px 10px;
+    display: flex;
     .iconfont {
       margin-right: 15px;
+      cursor: pointer;
     }
   }
   .main {
