@@ -11,7 +11,7 @@
     </div>
     <div class="toolbar">
       <el-tooltip class="item" effect="dark" content="新建聊天" placement="right">
-        <Icon type="addperson" class="icon" />
+        <Icon type="addperson" class="icon" @click="ToggleGroupAddDialog" />
       </el-tooltip>
       <el-tooltip class="item" effect="dark" content="聊天记录" placement="right">
         <Icon type="cloud_history" class="icon" />
@@ -27,16 +27,20 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 export default {
   props: ["avatar", "userName", "userDetail"],
   data() {
     return {};
   },
-  computed: {},
+  computed: {
+  },
   created() {},
   mounted() {},
   watch: {},
-  methods: {},
+  methods: {
+    ...mapMutations(["ToggleGroupAddDialog"])
+  },
   components: {}
 };
 </script>

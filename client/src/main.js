@@ -7,6 +7,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import '@/style/index.scss'
 import global from './utils/global'
 import VueSocketIO from 'vue-socket.io'
+import { myPlugins } from './plugins'
 Vue.use(new VueSocketIO({
   debug: true,
   connection: 'http://localhost:3008',
@@ -16,10 +17,13 @@ Vue.use(new VueSocketIO({
     mutationPrefix: 'SOCKET_'
   }
 }))
-
+Vue.use(myPlugins)
 Vue.config.productionTip = false
 Vue.use(ElementUI);
 Vue.use(global)
+import Vant from 'vant';
+Vue.use(Vant);
+import 'vant/lib/index.css';
 new Vue({
   router,
   store,

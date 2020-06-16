@@ -24,6 +24,7 @@ export default {
     },
     async authorization({ commit }) {
         try {
+            console.log(1)
             const res = await GetUserInfo()
             if (res.code == 200) {
                 console.log(res)
@@ -35,7 +36,7 @@ export default {
                 return true
             }
         } catch (e) {
-
+            console.log(e)
         }
     }
 }

@@ -2,29 +2,23 @@
   <div class="edit">
     <div class="header">
       <Icon type="im_face" :size="18" />
-      <el-upload
-        ref="imgUpload"
-        action
-        :on-change="handleChange"
-        :http-request="upload"
-        accept="image/gif, image/jpeg, image/jpg, image/png, image/svg"
-      >
-        <Icon type="photo" :size="18" />
-      </el-upload>
+      <Icon type="photo" :size="18" @click="$refs.image.click()" />
       <Icon type="likegood" :size="18" />
+      <Icon type="file" :size="18" />
       <Icon type="more" :size="18" />
+      <input type="file" ref="image" class="file" @change="upload" />
     </div>
     <div class="main">
-      <el-input
-        type="textarea"
+      <textarea
+        ref="editMain"
         placeholder="请输入内容"
         v-model="msg"
         @keydown.enter.stop.prevent="send"
-        :rows="4"
-      />
+        rows="5"
+      ></textarea>
     </div>
     <div class="footer">
-      <!-- TODO: 回车发送 -->
+      <!-- TODO: 回车发送;ctrl+回车换行 -->
       <p class="tip">Enter 发送，Ctrl+Enter 换行</p>
       <el-button
         class="btn-send"
@@ -55,25 +49,60 @@ export default {
     ...mapGetters(["CurrentChat", "user"])
   },
   created() {},
-  mounted() {},
+  mounted() {
+    this.$refs.editMain.addEventListener("paste", async event => {
+      let items = event.clipboardData && event.clipboardData.items;
+      let file = null;
+      if (items && items.length) {
+        // 检索剪切板items
+        for (var i = 0; i < items.length; i++) {
+          if (items[i].type.indexOf("image") !== -1) {
+            file = items[i].getAsFile();
+            break;
+          }
+        }
+      }
+      if (file != null) {
+        // TODO:先展示到输入框里面，所有这里textarae 要改到 div contenteditable ='true'
+        // let fileReader = new FileReader();
+        // fileReader.onload(f => {
+        //   console.log(f);
+        // });
+        // fileReader.readAsBinaryString(file);
+        let formData = new FormData();
+        formData.append("file", file);
+        let res = await UploadFile(formData);
+        if (res.code == 200) {
+          this.$socket.emit("sendmsg", {
+            from: this.user._id,
+            type: "image",
+            msg: res.data.filePath,
+            to: this.CurrentChat._id
+          });
+        }
+      }
+    });
+  },
   watch: {},
   methods: {
-    handleChange(file) {
-      console.log("select-----", file);
-    },
-    async upload(file) {
-      console.log("upload-----", file);
+    async upload() {
+      const file = this.$refs.image.files[0];
       let formData = new FormData();
-      formData.append("file", file.file);
+      formData.append("file", file);
       let res = await UploadFile(formData);
-      console.log(res);
+      if (res.code == 200) {
+        this.$socket.emit("sendmsg", {
+          from: this.user._id,
+          type: "image",
+          msg: res.data.filePath,
+          to: this.CurrentChat._id
+        });
+      }
     },
     async send() {
-      console.log(this.msg);
       if (this.msg == "") return false;
       let msg = this.msg;
       this.msg = "";
-      console.log(this.msg);
       this.$socket.emit("sendmsg", {
         from: this.user._id,
         type: "text",
@@ -111,10 +140,12 @@ export default {
     }
   }
   .main {
-    padding: 3px;
-    ::v-deep.el-textarea__inner {
+    padding: 6px 12px;
+    textarea {
+      width: 100%;
       border: none;
       resize: none;
+      outline: none;
     }
   }
   .footer {
@@ -127,5 +158,8 @@ export default {
       margin-right: 15px;
     }
   }
+}
+.file {
+  display: none;
 }
 </style>

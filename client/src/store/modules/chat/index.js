@@ -32,13 +32,13 @@ export default {
             if (idx > -1) {
                 let cur = state.UnRead[idx]
                 cur.count += 1
-                cur.lastMsg = msgData.msg
+                cur.lastMsg = msgData.type == 'image' ? '[图片]' : msgData.msg
                 state.UnRead.splice(idx, 1, cur)
             } else {
                 state.UnRead.push({
                     _id: msgData.from,
                     count: 1,
-                    lastMsg: msgData.msg
+                    lastMsg: msgData.type == 'image' ? '[图片]' : msgData.msg
                 })
             }
         },

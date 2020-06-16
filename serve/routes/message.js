@@ -18,7 +18,7 @@ router.post("/sendmessage", async ctx => {
 })
 
 router.post("/upload", async ctx => {
-    
+
 })
 
 router.get("/getmessage", async ctx => {
@@ -41,6 +41,8 @@ router.get("/getmessage", async ctx => {
         msg
     }) => {
         const isSend = from == user._id ? 0 : 1
+        // TODO:node获取服务器的ip端口
+        msg = type === "image" ? 'http://localhost:3001' + msg : msg
         return {
             isSend,
             from,

@@ -6,7 +6,7 @@
     <div class="right">
       <ChatHead
         :avatar="user.avatar"
-        :userName="user.userName"
+        :userName="CurrentChat&&CurrentChat.name"
         :userDetail="user.userDetail"
         v-show="$route.name==='chat' && CurrentChat"
       />

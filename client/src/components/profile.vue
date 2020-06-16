@@ -2,7 +2,7 @@
   <div class="profile" @mousedown.stop="mousedown" ref="profile">
     <div class="header">
       <div class="intro">
-        <h1>culler</h1>
+        <h1>{{profile.name}}</h1>
         <p>GitHub软件有限公司</p>
       </div>
       <div class="avatar">
@@ -13,7 +13,7 @@
       <p class="componey">GitHub软件有限公司</p>
       <p>
         <span>姓名</span>
-        culler
+        {{profile.name}}
       </p>
       <p>
         <span>电话</span>
@@ -56,7 +56,7 @@ export default {
   watch: {},
   methods: {
     mousedown(event) {
-      event.preventDefault()
+      event.preventDefault();
       console.log(event.target);
       this.selectElement = this.$refs.profile;
       var div1 = this.selectElement;
@@ -87,7 +87,6 @@ export default {
       };
     },
     async addFriend() {
-      console.log(1)
       const res = await AddFriend({
         fid: this.profile._id
       });

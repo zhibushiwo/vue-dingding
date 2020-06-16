@@ -56,7 +56,7 @@ mongoose.connect(db, { useNewUrlParser: true })
     .then(() => console.log("db connet"))
     .catch(err => console.log("err" + err));
 
-app.use(static(path.join(__dirname, './public')))
+app.use(static(path.join(__dirname, keys.staticPath)))
 app.use(KoaBody({
     multipart: true,
     formidable: {
@@ -75,10 +75,10 @@ app.use(GetCurrentUser())
 //app.use(tokenAccess)
 // app.use(passport.initialize());
 // require("./config/passport")(passport);
-
-app.use(routes.routes(), routes.allowedMethods());
-
 app.use(catchError())
 app.use(response_formatter())
+app.use(routes.routes(), routes.allowedMethods());
+
+
 
 app.listen(3001);

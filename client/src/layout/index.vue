@@ -3,6 +3,7 @@
     <DingSideBar />
     <DingHead />
     <DingContent class="content" />
+    <GroupAdd />
   </div>
 </template>
 
@@ -10,6 +11,7 @@
 import DingHead from "./components/ding-head";
 import DingSideBar from "./components/ding-sidebar";
 import DingContent from "./components/ding-content";
+import GroupAdd from "@/components/group-add";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 export default {
   name: "Layout",
@@ -49,7 +51,8 @@ export default {
   components: {
     DingHead,
     DingSideBar,
-    DingContent
+    DingContent,
+    GroupAdd
   }
 };
 </script>

@@ -23,17 +23,34 @@ export default {
     sendState: {
       type: Number,
       default: 0
+    },
+    type: {
+      type: String,
+      default: "text"
     }
   },
   render() {
+    // TODO 点击查看大图
+    let msgcontent = <div>{this.content}</div>;
+    switch (this.type) {
+      case "image":
+        msgcontent = (
+          <div>
+            <img src={this.content} /> 
+          </div>
+        );
+        break;
+      default:
+        break;
+    }
     return (
       <div class={`msg-item  ${this.isSend === 0 ? "mine" : ""}`}>
-        <div class="time">{ formatDate(this.time,'hh:mm') }</div>
+        <div class="time">{formatDate(this.time, "hh:mm")}</div>
         <div class="avatarWrap">
           <img src={this.avatar} />
         </div>
         <div class="content">
-          <div> {this.content} </div>
+          <div> {msgcontent} </div>
         </div>
       </div>
     );
@@ -68,6 +85,9 @@ export default {
     max-width: 60%;
     word-wrap: break-word;
     word-break: break-all;
+    img {
+      max-width: 300px;
+    }
   }
   &.mine {
     flex-direction: row-reverse;

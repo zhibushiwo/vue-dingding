@@ -8,6 +8,7 @@
           :content="item.content"
           :time="item.time"
           :isSend="item.isSend"
+          :type="item.type"
           class="msg-item"
         />
       </div>
@@ -110,10 +111,10 @@ export default {
       }
     },
     msgData() {
-      
-      this.$nextTick(()=>{
-         scrollToBottom(this.$refs.msgContent);
-      })
+      //TODO 加载图片后滚动到底部
+      this.$nextTick(() => {
+        scrollToBottom(this.$refs.msgContent);
+      });
     }
   },
   components: {
